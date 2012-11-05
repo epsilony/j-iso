@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.epsilony.isomesh.twod;
+package net.epsilony.iso2d;
 
 import java.util.LinkedList;
 import java.util.List;
-import net.epsilony.isomesh.IsoFunction;
-import net.epsilony.isomesh.util.SegmentLengthTooSmall;
+import net.epsilony.iso.IsoFunction;
+import net.epsilony.iso.SegmentLengthTooSmall;
 
 /**
  *
