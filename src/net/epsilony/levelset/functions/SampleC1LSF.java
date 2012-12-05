@@ -26,7 +26,7 @@ public class SampleC1LSF extends SampleLSF{
         vertes[3] = new Coordinate(x0, y0 + h);
 
 
-        quadF = new QuadrangleLSF(1,vertes, 2, 0.3);
+        quadF = new QuadrangleLSF(1,vertes, 0.3);
 
 
         ellF1 = new EllipseLSF(xe1 + x0, ye1 + y0, a1, b1);

@@ -14,18 +14,16 @@ import net.epsilony.utils.geom.Coordinate;
 public class HalfPlaneLogisticLST extends HalfPlaneLinearLSF {
 
     double k;
-    double scale;
 
-    public HalfPlaneLogisticLST(Coordinate p1, Coordinate p2, double scale, double k) {
+    public HalfPlaneLogisticLST(Coordinate p1, Coordinate p2, double k) {
         super(p1, p2, 1);
         this.k = k;
-        this.scale = scale;
     }
 
     @Override
     public double[] values(Coordinate coord, double[] results) {
         results = super.values(coord, results);
-        AtomOperations.valueOfLogistic(results, results, scale, k, diffOrder, getDim());
+        AtomOperations.valueOfLogistic(results, results, 1, k, diffOrder, getDim());
         return results;
     }
 }

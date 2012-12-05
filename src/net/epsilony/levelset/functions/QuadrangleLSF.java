@@ -17,22 +17,22 @@ public class QuadrangleLSF extends Quadrangle implements CoordinatePartDiffFunct
 
     private CoordinatePartDiffFunction fun;
 
-    public QuadrangleLSF(int m,Coordinate[] vertes,double scale, double k) {
+    public QuadrangleLSF(int m,Coordinate[] vertes, double k) {
         super(vertes, true);
-        init(m,scale,k);
+        init(m,k);
     }
     
-    public QuadrangleLSF(Coordinate[] vertes,double scale, double k) {
+    public QuadrangleLSF(Coordinate[] vertes, double k) {
         super(vertes, true);
-        init(0,scale,k);
+        init(0,k);
     }
     
-    private void init(int m,double scale,double k){
+    private void init(int m,double k){
         CoordinatePartDiffFunction[] funs = new CoordinatePartDiffFunction[4];
         for (int i = 0; i < vertes.length; i++) {
             Coordinate p1 = vertes[i % 4];
             Coordinate p2 = vertes[(i + 1) % 4];
-            funs[i]=new HalfPlaneLogisticLST(p1, p2, scale, k);
+            funs[i]=new HalfPlaneLogisticLST(p1, p2, k);
         }
         CoordinatePartDiffFunction itsec1 = AtomOperations.intersection(m,funs[0],1 ,funs[2],1, 2);
         CoordinatePartDiffFunction itsec2 = AtomOperations.intersection(m,funs[1],1 ,funs[3],1, 2);

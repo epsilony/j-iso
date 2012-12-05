@@ -26,9 +26,7 @@ public class QuadrangleLSFTest {
             coords[i] = new Coordinate(vertesxys[i * 2], vertesxys[i * 2 + 1]);
         }
 
-        double ramp = 3.2;
-
-        QuadrangleLSF q = new QuadrangleLSF(coords, 1,0.3);
+        QuadrangleLSF q = new QuadrangleLSF(coords, 0.3);
 
         double[] samples = new double[]{1.5, -2.5, 5, 3, -0.5, 5.25};
         double[][] exps = new double[][]{{0},{0},{0}};

@@ -53,6 +53,15 @@ public class AtomOperations {
         }
     }
 
+    /**
+     * $\frac{2s}{1+e^{-kt}}-s$
+     * @param ori
+     * @param results
+     * @param scale
+     * @param k
+     * @param partDiffOrder
+     * @param dim 
+     */
     public static void valueOfLogistic(double[] ori, double[] results, double scale, double k, int partDiffOrder, int dim) {
         double t = ori[0];
         double e = Math.exp(-k * t);
