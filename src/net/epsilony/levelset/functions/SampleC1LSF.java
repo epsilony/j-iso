@@ -12,22 +12,21 @@ import net.epsilony.utils.geom.Coordinate;
  *
  * @author epsilon
  */
-public class SampleC2LSF extends SampleLSF {
-
-    public SampleC2LSF() {
+public class SampleC1LSF extends SampleLSF{
+    public SampleC1LSF() {
         super(false);
-        generateC2();
+        generateC1();
     }
-
-    public final void generateC2() {
-        Coordinate[] vertes = new Coordinate[4];
+    
+    public final void generateC1(){
+                Coordinate[] vertes = new Coordinate[4];
         vertes[0] = new Coordinate(x0, y0);
         vertes[1] = new Coordinate(x0 + w, y0);
         vertes[2] = new Coordinate(x0 + w, y0 + h);
         vertes[3] = new Coordinate(x0, y0 + h);
 
 
-        quadF = new QuadrangleLSF(2, vertes, 5, 0.3);
+        quadF = new QuadrangleLSF(1,vertes, 2, 0.3);
 
 
         ellF1 = new EllipseLSF(xe1 + x0, ye1 + y0, a1, b1);
@@ -40,10 +39,10 @@ public class SampleC2LSF extends SampleLSF {
 
 
         cirF = new EllipseLSF(xc + x0, yc + y0, r, r);
-        CoordinatePartDiffFunction t1 = AtomOperations.union(2, ellF1, 1, ellF2, 1, 2);
-        t1 = AtomOperations.union(2, t1, 1, ellF3, 1, 2);
-        t1 = AtomOperations.union(2, t1, 1, cirF, 1, 2);
+        CoordinatePartDiffFunction t1 = AtomOperations.union(1,ellF1,1, ellF2,1, 2);
+        t1 = AtomOperations.union(1,t1, 0.5,ellF3,1, 2);
+        t1 = AtomOperations.union(1,t1, 0.5/1250,cirF,1, 2);
 
-        this.fun = AtomOperations.intersection(2, quadF, 1, t1, -1, 2);
+        this.fun = AtomOperations.intersection(1,quadF, 1/50.0, t1, -1/1250.0, 2);
     }
 }

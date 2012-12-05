@@ -77,16 +77,16 @@ public class SampleLSF {
         quadF = new QuadrangleLSF(vertes, 5, 0.3);
 
 
-        ellF1 = new EllipseLSF(xe1 + x0, ye1 + y0, a1, b1, ellScale);
+        ellF1 = new EllipseLSF(xe1 + x0, ye1 + y0, a1, b1);
 
 
-        ellF2 = new EllipseLSF(xe2 + x0, ye2 + y0, a2, b2, ellScale);
+        ellF2 = new EllipseLSF(xe2 + x0, ye2 + y0, a2, b2);
 
 
-        ellF3 = new EllipseLSF(xe3 + x0, ye3 + y0, a3, b3, ellScale);
+        ellF3 = new EllipseLSF(xe3 + x0, ye3 + y0, a3, b3);
 
 
-        cirF = new EllipseLSF(xc + x0, yc + y0, r, r, ellScale);
+        cirF = new EllipseLSF(xc + x0, yc + y0, r, r);
         CoordinatePartDiffFunction t1 = AtomOperations.union(0,ellF1, ellF2, 2);
         t1 = AtomOperations.union(0,t1, ellF3, 2);
         t1 = AtomOperations.union(0,t1, cirF, 2);
