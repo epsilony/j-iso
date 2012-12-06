@@ -14,7 +14,11 @@ import net.epsilony.utils.geom.Coordinate;
  * @author epsilon
  */
 public class AtomOperations {
-
+    
+    public static CoordinatePartDiffFunction scale(CoordinatePartDiffFunction fun, double scale) {
+        return new Scale(fun,scale);
+    }
+    
     public static CoordinatePartDiffFunction logistic(CoordinatePartDiffFunction fun, double scale, double k) {
         return new Logistic(fun, scale, k);
     }
@@ -54,13 +58,27 @@ public class AtomOperations {
     }
 
     /**
-     * $\frac{2s}{1+e^{-kt}}-s$
+     * 
      * @param ori
      * @param results
      * @param scale
      * @param k
      * @param partDiffOrder
-     * @param dim 
+     * @param dim
+     */
+    public static void valueOfScale(double[] ori, double[] results, double k, int partDiffOrder, int dim) {
+        System.arraycopy(ori, 0, results, 0, CommonUtils.lenBase(dim, partDiffOrder));
+    }
+
+    /**
+     * $\frac{2s}{1+e^{-kt}}-s$
+     *
+     * @param ori
+     * @param results
+     * @param scale
+     * @param k
+     * @param partDiffOrder
+     * @param dim
      */
     public static void valueOfLogistic(double[] ori, double[] results, double scale, double k, int partDiffOrder, int dim) {
         double t = ori[0];
@@ -219,7 +237,7 @@ public class AtomOperations {
             }
         }
     }
-
+    
     static abstract class CombineAdapter implements CoordinatePartDiffFunction {
 
         protected final CoordinatePartDiffFunction fun1, fun2;
@@ -358,6 +376,42 @@ public class AtomOperations {
         @Override
         public int getDim() {
             return fun.getDim();
+        }
+    }
+
+    public static class Scale implements CoordinatePartDiffFunction {
+
+        CoordinatePartDiffFunction oriFun;
+        double scale;
+
+        public Scale(CoordinatePartDiffFunction oriFun, double scale) {
+            this.oriFun = oriFun;
+            this.scale = scale;
+        }
+
+        @Override
+        public double[] values(Coordinate coord, double[] results) {
+            results = oriFun.values(coord, results);
+            valueOfScale(results, results, scale, getDiffOrder(), getDim());
+            return results;
+        }
+
+        @Override
+        public void setDiffOrder(int order) {
+            if (order > 1 || order < 0) {
+                throw new UnsupportedOperationException("Only supports order 0 or 1.");
+            }
+            oriFun.setDiffOrder(order);
+        }
+
+        @Override
+        public int getDiffOrder() {
+            return oriFun.getDiffOrder();
+        }
+
+        @Override
+        public int getDim() {
+            return oriFun.getDim();
         }
     }
 
