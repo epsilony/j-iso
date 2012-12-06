@@ -39,10 +39,10 @@ public class SampleC1LSF extends SampleLSF{
 
 
         cirF = new EllipseLSF(xc + x0, yc + y0, r, r);
-        CoordinatePartDiffFunction t1 = AtomOperations.union(1,ellF1,1, ellF2,1, 2);
-        t1 = AtomOperations.union(1,t1, 0.5,ellF3,1, 2);
-        t1 = AtomOperations.union(1,t1, 0.5/1250,cirF,1, 2);
-
-        this.fun = AtomOperations.intersection(1,quadF, 1/50.0, t1, -1/1250.0, 2);
+//        CoordinatePartDiffFunction t1 = AtomOperations.union(1,ellF1,ellF2,1, 2);
+//        t1 = AtomOperations.union(1,t1, 0.5,ellF3,1, 2);
+//        t1 = AtomOperations.union(1,t1, 0.5/1250,cirF,1, 2);
+//
+//        this.fun = AtomOperations.intersection(1,quadF, 1/50.0, t1, -1/1250.0, 2);
     }
 }

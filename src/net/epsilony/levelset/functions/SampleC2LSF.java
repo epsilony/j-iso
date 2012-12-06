@@ -40,10 +40,10 @@ public class SampleC2LSF extends SampleLSF {
 
 
         cirF = new EllipseLSF(xc + x0, yc + y0, r, r);
-        CoordinatePartDiffFunction t1 = AtomOperations.union(2, ellF1, 1, ellF2, 1, 2);
-        t1 = AtomOperations.union(2, t1, 1, ellF3, 1, 2);
-        t1 = AtomOperations.union(2, t1, 1, cirF, 1, 2);
-
-        this.fun = AtomOperations.intersection(2, quadF, 1, t1, -1, 2);
+//        CoordinatePartDiffFunction t1 = AtomOperations.union(2, ellF1, 1, ellF2, 1, 2);
+//        t1 = AtomOperations.union(2, t1, 1, ellF3, 1, 2);
+//        t1 = AtomOperations.union(2, t1, 1, cirF, 1, 2);
+//
+//        this.fun = AtomOperations.intersection(2, quadF, 1, t1, -1, 2);
     }
 }

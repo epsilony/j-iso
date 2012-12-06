@@ -91,7 +91,7 @@ public class SampleLSF {
         t1 = AtomOperations.union(0,t1, ellF3, 2);
         t1 = AtomOperations.union(0,t1, cirF, 2);
 
-        this.fun = AtomOperations.intersection(0,quadF, 1, t1, -1, 2);
+//        this.fun = AtomOperations.intersection(0,quadF, t1, 2);
 
     }
 
