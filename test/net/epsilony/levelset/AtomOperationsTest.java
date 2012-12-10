@@ -4,6 +4,7 @@
  */
 package net.epsilony.levelset;
 
+import net.epsilony.levelset.ops.AtomOperations;
 import net.epsilony.math.CoordinatePartDiffFunction;
 import net.epsilony.spfun.CommonUtils;
 import net.epsilony.utils.geom.Coordinate;

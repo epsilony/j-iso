@@ -4,7 +4,7 @@
  */
 package net.epsilony.levelset.functions;
 
-import net.epsilony.levelset.AtomOperations;
+import net.epsilony.levelset.ops.AtomOperations;
 import net.epsilony.math.CoordinatePartDiffFunction;
 import net.epsilony.utils.geom.Coordinate;
 import net.epsilony.utils.geom.Quadrangle;
