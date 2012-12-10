@@ -11,7 +11,7 @@ import net.epsilony.utils.geom.Coordinate;
  *
  * @author epsilon
  */
-public class Logistic implements CoordinatePartDiffFunction {
+public class LogisticNorm implements CoordinatePartDiffFunction {
 
     /**
      * $\frac{2s}{1+e^{-kt}}-s$
@@ -39,7 +39,7 @@ public class Logistic implements CoordinatePartDiffFunction {
     CoordinatePartDiffFunction oriFun;
     double k;
 
-    public Logistic(CoordinatePartDiffFunction oriFun, double k) {
+    public LogisticNorm(CoordinatePartDiffFunction oriFun, double k) {
         this.oriFun = oriFun;
         this.k = k;
     }

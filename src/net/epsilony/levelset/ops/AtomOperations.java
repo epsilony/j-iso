@@ -4,10 +4,7 @@
  */
 package net.epsilony.levelset.ops;
 
-import java.util.Arrays;
 import net.epsilony.math.CoordinatePartDiffFunction;
-import net.epsilony.spfun.CommonUtils;
-import net.epsilony.utils.geom.Coordinate;
 
 /**
  *
@@ -19,8 +16,8 @@ public class AtomOperations {
         return new Scale(fun, scale);
     }
 
-    public static CoordinatePartDiffFunction logistic(CoordinatePartDiffFunction fun, double k) {
-        return new Logistic(fun, k);
+    public static CoordinatePartDiffFunction logisticNorm(CoordinatePartDiffFunction fun, double k) {
+        return new LogisticNorm(fun, k);
     }
 
     public static CoordinatePartDiffFunction union_intersection(boolean isUnion, int m, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
@@ -29,6 +26,14 @@ public class AtomOperations {
 
     public static CoordinatePartDiffFunction union_intersection(boolean isUnion, int m, boolean throwZeroDivider, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
         return new UnionIntersection(isUnion, m, throwZeroDivider, fun1, fun2, dim);
+    }
+    
+    public static CoordinatePartDiffFunction normed_union_intersection(boolean isUnion, int m, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
+        return new NormUnionIntersection(isUnion, m, false, fun1, fun2, dim);
+    }
+
+    public static CoordinatePartDiffFunction normed_union_intersection(boolean isUnion, int m, boolean throwZeroDivider, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
+        return new NormUnionIntersection(isUnion, m, throwZeroDivider, fun1, fun2, dim);
     }
 
     public static CoordinatePartDiffFunction complement(CoordinatePartDiffFunction fun) {

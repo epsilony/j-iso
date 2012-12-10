@@ -83,7 +83,7 @@ class UnionIntersection implements CoordinatePartDiffFunction {
             }
         }
     }
-    private final boolean isUnion;
+    final boolean isUnion;
     final CoordinatePartDiffFunction fun1;
     final CoordinatePartDiffFunction fun2;
     final int dim;

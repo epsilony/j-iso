@@ -22,7 +22,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testLogistic() {
-        CoordinatePartDiffFunction fun = AtomOperations.logistic(fun1, 3);
+        CoordinatePartDiffFunction fun = AtomOperations.logisticNorm(fun1, 3);
         double[] samples = new double[]{0, 0, 2, 0, -18, 0, -8, 5, -8, -5};
         fun.setDiffOrder(0);
         double[][] exps = new double[][]{{(3.28457352668571 - 2.2)/2.2},

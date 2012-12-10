@@ -5,7 +5,7 @@
 package net.epsilony.levelset.functions;
 
 import net.epsilony.levelset.ops.AtomOperations;
-import net.epsilony.levelset.ops.Logistic;
+import net.epsilony.levelset.ops.LogisticNorm;
 import net.epsilony.utils.geom.Coordinate;
 
 /**
@@ -24,7 +24,7 @@ public class HalfPlaneLogisticLST extends HalfPlaneLinearLSF {
     @Override
     public double[] values(Coordinate coord, double[] results) {
         results = super.values(coord, results);
-        Logistic.valueOfLogistic(results, results, k, diffOrder, getDim());
+        LogisticNorm.valueOfLogistic(results, results, k, diffOrder, getDim());
         return results;
     }
 }
