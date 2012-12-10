@@ -23,7 +23,7 @@ public class HalfPlaneLogisticLST extends HalfPlaneLinearLSF {
     @Override
     public double[] values(Coordinate coord, double[] results) {
         results = super.values(coord, results);
-        AtomOperations.valueOfLogistic(results, results, 1, k, diffOrder, getDim());
+        AtomOperations.valueOfLogistic(results, results, k, diffOrder, getDim());
         return results;
     }
 }

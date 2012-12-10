@@ -87,9 +87,9 @@ public class SampleLSF {
 
 
         cirF = new EllipseLSF(xc + x0, yc + y0, r, r);
-        CoordinatePartDiffFunction t1 = AtomOperations.union(0,ellF1, ellF2, 2);
-        t1 = AtomOperations.union(0,t1, ellF3, 2);
-        t1 = AtomOperations.union(0,t1, cirF, 2);
+        CoordinatePartDiffFunction t1 = AtomOperations.union_intersection(true,0,ellF1, ellF2, 2);
+        t1 = AtomOperations.union_intersection(true,0,t1, ellF3, 2);
+        t1 = AtomOperations.union_intersection(true,0,t1, cirF, 2);
 
 //        this.fun = AtomOperations.intersection(0,quadF, t1, 2);
 

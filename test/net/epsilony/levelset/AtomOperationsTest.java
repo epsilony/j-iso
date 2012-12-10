@@ -21,10 +21,10 @@ public class AtomOperationsTest {
 
     @Test
     public void testLogistic() {
-        CoordinatePartDiffFunction fun = AtomOperations.logistic(fun1, 2.2, 3);
+        CoordinatePartDiffFunction fun = AtomOperations.logistic(fun1, 3);
         double[] samples = new double[]{0, 0, 2, 0, -18, 0, -8, 5, -8, -5};
         fun.setDiffOrder(0);
-        double[][] exps = new double[][]{{3.28457352668571 - 2.2},
+        double[][] exps = new double[][]{{(3.28457352668571 - 2.2)/2.2},
             {0},
             {0},
             {0},
@@ -38,7 +38,11 @@ public class AtomOperationsTest {
         samples = new double[]{1.5, 2.2, -1.5, 2.3};
         exps = new double[][]{{1.88504846666306 - 2.2, -0.614149807509037, -0.568896663797845},
             {3.29924719020606 - 2.2, -0.321896747677589, -0.455607704405203},};
-
+        for (int i=0;i<exps.length;i++){
+            for(int j=0;j<3;j++){
+                exps[i][j]/=2.2;
+            }
+        }
         for (int i = 0; i < exps.length; i++) {
             double[] acts = fun.values(new Coordinate(samples[i * 2], samples[i * 2 + 1]), null);
             assertArrayEquals(exps[i], acts, 1e-10);
@@ -47,7 +51,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testIntersection() {
-        CoordinatePartDiffFunction fun = AtomOperations.intersection(0, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(false,0, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{2, 0, -10, 0, -4, 4.58257569495584, -4, -4.58257569495584, -4, 0, 10, 0};
@@ -79,7 +83,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testUnion() {
-        CoordinatePartDiffFunction fun = AtomOperations.union(0, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(true,0, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{2, 0, -10, 0, -4, 4.58257569495584, -4, -4.58257569495584, -18, -2, 0.1, 0.2};
@@ -111,7 +115,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testUnionC1() {
-        CoordinatePartDiffFunction fun = AtomOperations.union(1, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(true,1, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{2, 0, -10, 0, -4, 4.58257569495584, -4, -4.58257569495584, -18, -2, 0.1, 0.2};
@@ -143,7 +147,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testIntersectionC1() {
-        CoordinatePartDiffFunction fun = AtomOperations.intersection(1, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(false,1, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{2, 0, -10, 0, -4, 4.58257569495584, -4, -4.58257569495584, -4, 0, 10, 0};
@@ -175,7 +179,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testIntersectionC2() {
-        CoordinatePartDiffFunction fun = AtomOperations.intersection(2, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(false,2, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{2, 0, -10, 0, -4, 4.58257569495584, -4, -4.58257569495584, -4, 0, 10, 0};
@@ -207,7 +211,7 @@ public class AtomOperationsTest {
 
     @Test
     public void testUnionC2() {
-        CoordinatePartDiffFunction fun = AtomOperations.union(2, fun1, fun2, 2);
+        CoordinatePartDiffFunction fun = AtomOperations.union_intersection(true,2, fun1, fun2, 2);
         fun.setDiffOrder(0);
 
         double[] samples = new double[]{10, 0, -18, 0, 0, 5, 0, -5, -8, 5, -8, -5, -4, 4.58257569495584, -4, -4.58257569495584, -18, -2, 0.1, 0.2};

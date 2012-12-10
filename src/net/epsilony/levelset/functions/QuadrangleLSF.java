@@ -34,9 +34,9 @@ public class QuadrangleLSF extends Quadrangle implements CoordinatePartDiffFunct
             Coordinate p2 = vertes[(i + 1) % 4];
             funs[i]=new HalfPlaneLogisticLST(p1, p2, k);
         }
-        CoordinatePartDiffFunction itsec1 = AtomOperations.intersection(m,funs[0],funs[2], 2);
-        CoordinatePartDiffFunction itsec2 = AtomOperations.intersection(m,funs[1],funs[3], 2);
-        fun = AtomOperations.intersection(m,itsec1, itsec2, 2);
+        CoordinatePartDiffFunction itsec1 = AtomOperations.union_intersection(false,m,funs[0],funs[2], 2);
+        CoordinatePartDiffFunction itsec2 = AtomOperations.union_intersection(false,m,funs[1],funs[3], 2);
+        fun = AtomOperations.union_intersection(false,m,itsec1, itsec2, 2);
     }
 
     @Override

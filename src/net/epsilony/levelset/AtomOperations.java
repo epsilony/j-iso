@@ -6,6 +6,7 @@ package net.epsilony.levelset;
 
 import java.util.Arrays;
 import net.epsilony.math.CoordinatePartDiffFunction;
+import net.epsilony.math.CoordinatePartDiffFunction;
 import net.epsilony.spfun.CommonUtils;
 import net.epsilony.utils.geom.Coordinate;
 
@@ -19,24 +20,16 @@ public class AtomOperations {
         return new Scale(fun, scale);
     }
 
-    public static CoordinatePartDiffFunction logistic(CoordinatePartDiffFunction fun, double scale, double k) {
-        return new Logistic(fun, scale, k);
-    }
-    
-    public static CoordinatePartDiffFunction union(int m, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-        return new UnionIntersection(true, m, false, fun1, fun2, dim);
+    public static CoordinatePartDiffFunction logistic(CoordinatePartDiffFunction fun, double k) {
+        return new Logistic(fun, k);
     }
 
-    public static CoordinatePartDiffFunction intersection(int m, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-        return new UnionIntersection(false, m, false, fun1, fun2, dim);
-    }
-    
-    public static CoordinatePartDiffFunction union(int m, boolean throwZeroDivider,CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-        return new UnionIntersection(true, m, throwZeroDivider, fun1, fun2, dim);
+    public static CoordinatePartDiffFunction union_intersection(boolean isUnion,int m, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
+        return new UnionIntersection(isUnion, m, false, fun1, fun2, dim);
     }
 
-    public static CoordinatePartDiffFunction intersection(int m, boolean throwZeroDivider,CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-        return new UnionIntersection(false, m, throwZeroDivider, fun1, fun2, dim);
+    public static CoordinatePartDiffFunction union_intersection(boolean isUnion,int m, boolean throwZeroDivider, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
+        return new UnionIntersection(isUnion, m, throwZeroDivider, fun1, fun2, dim);
     }
 
     public static CoordinatePartDiffFunction complement(CoordinatePartDiffFunction fun) {
@@ -72,14 +65,14 @@ public class AtomOperations {
      * @param partDiffOrder
      * @param dim
      */
-    public static void valueOfLogistic(double[] ori, double[] results, double scale, double k, int partDiffOrder, int dim) {
+    public static void valueOfLogistic(double[] ori, double[] results, double k, int partDiffOrder, int dim) {
         double t = ori[0];
         double e = Math.exp(-k * t);
         double b = (1 + e);
-        double f = scale * 2 / b - scale;
+        double f = 2 / b - 1;
         results[0] = f;
         if (partDiffOrder > 0) {
-            double f_t = e * k * scale * 2 / (b * b);
+            double f_t = e * k * 2 / (b * b);
             for (int i = 0; i < dim; i++) {
                 results[i + 1] = ori[i + 1] * f_t;
             }
@@ -158,13 +151,36 @@ public class AtomOperations {
         }
     }
 
-    static abstract class CombineAdapter implements CoordinatePartDiffFunction {
+    static class UnionIntersection implements CoordinatePartDiffFunction {
 
-        protected final CoordinatePartDiffFunction fun1, fun2;
+        private final boolean isUnion;
+        protected final CoordinatePartDiffFunction fun1;
+        protected final CoordinatePartDiffFunction fun2;
         protected final int dim;
         protected int diffOrder;
         protected final boolean throwWhenSingular;
         protected int continueM;
+
+        public UnionIntersection(boolean isUnion, int continueM, boolean throwSingular, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
+            this.fun1 = fun1;
+            this.fun2 = fun2;
+            this.dim = dim;
+            this.diffOrder = 0;
+            this.continueM = continueM;
+            this.throwWhenSingular = throwSingular;
+            fun1.setDiffOrder(0);
+            fun2.setDiffOrder(0);
+            this.isUnion = isUnion;
+        }
+
+        @Override
+        public double[] values(Coordinate coord, double[] results) {
+            double[] res1 = fun1.values(coord, null);
+            double[] res2 = fun2.values(coord, null);
+            results = initAndCheckSingular(results, res1, res2);
+            valueOfUnionIntersection(isUnion, continueM, res1, res2, dim, diffOrder, throwWhenSingular, results);
+            return results;
+        }
 
         public boolean isThrowWhenSingular() {
             return throwWhenSingular;
@@ -201,36 +217,6 @@ public class AtomOperations {
                     Arrays.fill(results, 0);
                 }
             }
-            return results;
-        }
-
-        protected CombineAdapter(int continueM, boolean throwSingular, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-            this.fun1 = fun1;
-            this.fun2 = fun2;
-            this.dim = dim;
-            this.diffOrder = 0;
-            this.continueM = continueM;
-            this.throwWhenSingular = throwSingular;
-            fun1.setDiffOrder(0);
-            fun2.setDiffOrder(0);
-        }
-    }
-
-    static class UnionIntersection extends CombineAdapter {
-
-        private final boolean isUnion;
-
-        public UnionIntersection(boolean isUnion, int continueM, boolean throwSingular, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
-            super(continueM, throwSingular, fun1, fun2, dim);
-            this.isUnion = isUnion;
-        }
-
-        @Override
-        public double[] values(Coordinate coord, double[] results) {
-            double[] res1 = fun1.values(coord, null);
-            double[] res2 = fun2.values(coord, null);
-            results = initAndCheckSingular(results, res1, res2);
-            valueOfUnionIntersection(isUnion, continueM, res1, res2, dim, diffOrder, throwWhenSingular, results);
             return results;
         }
     }
@@ -308,18 +294,16 @@ public class AtomOperations {
 
         CoordinatePartDiffFunction oriFun;
         double k;
-        double scale;
 
-        public Logistic(CoordinatePartDiffFunction oriFun, double scale, double k) {
+        public Logistic(CoordinatePartDiffFunction oriFun, double k) {
             this.oriFun = oriFun;
             this.k = k;
-            this.scale = scale;
         }
 
         @Override
         public double[] values(Coordinate coord, double[] results) {
             results = oriFun.values(coord, results);
-            valueOfLogistic(results, results, scale, k, getDiffOrder(), getDim());
+            valueOfLogistic(results, results, k, getDiffOrder(), getDim());
             return results;
         }
 
