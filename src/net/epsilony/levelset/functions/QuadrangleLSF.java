@@ -32,7 +32,7 @@ public class QuadrangleLSF extends Quadrangle implements CoordinatePartDiffFunct
         for (int i = 0; i < vertes.length; i++) {
             Coordinate p1 = vertes[i % 4];
             Coordinate p2 = vertes[(i + 1) % 4];
-            funs[i]=new HalfPlaneLogisticLST(p1, p2, k);
+            funs[i]=new LogistNormHalfPlane(p1, p2, k);
         }
         CoordinatePartDiffFunction itsec1 = AtomOperations.union_intersection(false,m,funs[0],funs[2], 2);
         CoordinatePartDiffFunction itsec2 = AtomOperations.union_intersection(false,m,funs[1],funs[3], 2);

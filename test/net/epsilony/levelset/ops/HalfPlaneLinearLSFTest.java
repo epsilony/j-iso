@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.epsilony.levelset.functions;
+package net.epsilony.levelset.ops;
 
+import net.epsilony.levelset.functions.HalfPlaneLinearLSF;
 import net.epsilony.utils.geom.Coordinate;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -12,9 +13,9 @@ import static org.junit.Assert.*;
  *
  * @author epsilon
  */
-public class HalfPlaneLSFTest {
+public class HalfPlaneLinearLSFTest {
 
-    public HalfPlaneLSFTest() {
+    public HalfPlaneLinearLSFTest() {
     }
 
     @Test

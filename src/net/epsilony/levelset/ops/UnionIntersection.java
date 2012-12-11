@@ -89,7 +89,7 @@ class UnionIntersection implements CoordinatePartDiffFunction {
     final int dim;
     int diffOrder;
     final boolean throwWhenSingular;
-    int continueM;
+    protected int continueM;
 
     public UnionIntersection(boolean isUnion, int continueM, boolean throwSingular, CoordinatePartDiffFunction fun1, CoordinatePartDiffFunction fun2, int dim) {
         this.fun1 = fun1;

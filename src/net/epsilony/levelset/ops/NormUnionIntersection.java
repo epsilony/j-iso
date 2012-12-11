@@ -28,7 +28,7 @@ public class NormUnionIntersection extends UnionIntersection {
 
         b = Math.min(-2 / x1, 2 / x2) * B_SHRINK;
 
-        a1 = (-1 - b * x1) / (x1 * x2);
+        a1 = (-1 - b * x1) / (x1 * x1);
         a2 = (1 - b * x2) / (x2 * x2);
     }
 
@@ -47,7 +47,7 @@ public class NormUnionIntersection extends UnionIntersection {
         double r_f = 2 * a * f + b;
         if (diffOrder > 0) {
             for (int i = 0; i < dim; i++) {
-                res[1 + dim] *= r_f;
+                res[1 + i] *= r_f;
             }
         }
 
